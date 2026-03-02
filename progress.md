@@ -710,3 +710,20 @@
 ## 2026-03-01 00:40
 - Changed base route / from operation-login redirect to a public dark landing page with centered Doctor of Bat logo (src/app/page.tsx).
 - Removed the real-time date/time card from the operational left sidebar in AdminShell (src/components/admin-shell.tsx).
+
+## 2026-03-02 14:37
+- Added server-side auth guard in src/app/operation/admin/layout.tsx to block direct URL access without valid OPERATION session.
+- /operation/admin* now redirects to /operation/login when session cookie is missing/expired/invalid or portal access is not allowed.
+
+## 2026-03-02 15:23
+- Fixed logout redirect domain handling for both operation and accounting portals to avoid localhost redirects in production.
+- Added shared getAppBaseUrl(request) in src/lib/auth/session.ts (priority: NEXT_PUBLIC_BASE_URL -> forwarded host/proto -> request origin).
+- Updated logout routes to redirect using canonical app base URL + portal login path.
+
+## 2026-03-02 15:30
+- Updated website tab icon to custom brand icon (public/assets/icon.png) by adding app router icon file at src/app/icon.png.
+- Removed default Next.js favicon file (src/app/favicon.ico) so browser uses the custom icon instead.
+
+## 2026-03-02 16:03
+- Added explicit Prisma model-to-table mappings (@@map) for all core models in prisma/schema.prisma using the actual existing physical table names (lowercase singular).
+- Verified current DB naming with prisma db pull --print, then validated schema and build to ensure no behavior regressions before production.
